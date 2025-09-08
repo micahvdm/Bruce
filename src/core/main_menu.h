@@ -3,6 +3,7 @@
 
 #include <MenuItemInterface.h>
 
+#include "menu_items/BadUSBMenu.h"
 #include "menu_items/BleMenu.h"
 #include "menu_items/ClockMenu.h"
 #include "menu_items/ConfigMenu.h"
@@ -35,6 +36,7 @@ public:
     RFMenu rfMenu;
     ScriptsMenu scriptsMenu;
     WifiMenu wifiMenu;
+    BadUSBMenu badUSBMenu;
 #if !defined(LITE_VERSION)
     EthernetMenu ethernetMenu;
 #endif

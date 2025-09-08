@@ -38,4 +38,6 @@
 #include "../marauder-mini/pins_arduino.h"
 #elif LILYGO_T_HMI
 #include "../lilygo-t-hmi/pins_arduino.h"
+#elif HACKERMAN
+#include "../hackerman/pins_arduino.h"
 #endif

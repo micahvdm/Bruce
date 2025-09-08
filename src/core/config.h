@@ -98,7 +98,7 @@ public:
     // Misc
     String startupApp = "";
     String wigleBasicToken = "";
-    int devMode = 0;
+    int devMode = 1;
     int colorInverted = 1;
 
     std::vector<String> disabledMenus = {};

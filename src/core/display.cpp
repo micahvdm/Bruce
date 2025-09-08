@@ -58,24 +58,24 @@ void displayScrollingText(const String &text, Opt_Coord &coord) {
 ** Description:   Draw touch screen footer
 ***************************************************************************************/
 void TouchFooter(uint16_t color) {
-    tft.drawRoundRect(5, tftHeight + 2, tftWidth - 10, 43, 5, color);
-    tft.setTextColor(color);
-    tft.setTextSize(FM);
-    tft.drawCentreString("PREV", tftWidth / 6, tftHeight + 4, 1);
-    tft.drawCentreString("SEL", tftWidth / 2, tftHeight + 4, 1);
-    tft.drawCentreString("NEXT", 5 * tftWidth / 6, tftHeight + 4, 1);
+    // tft.drawRoundRect(5, tftHeight + 2, tftWidth - 10, 43, 5, color);
+    // tft.setTextColor(color);
+    // tft.setTextSize(FM);
+    // tft.drawCentreString("PREV", tftWidth / 6, tftHeight + 4, 1);
+    // tft.drawCentreString("SEL", tftWidth / 2, tftHeight + 4, 1);
+    // tft.drawCentreString("NEXT", 5 * tftWidth / 6, tftHeight + 4, 1);
 }
 /***************************************************************************************
 ** Function name: TouchFooter
 ** Description:   Draw touch screen footer
 ***************************************************************************************/
 void MegaFooter(uint16_t color) {
-    tft.drawRoundRect(5, tftHeight + 2, tftWidth - 10, 43, 5, color);
-    tft.setTextColor(color);
-    tft.setTextSize(FM);
-    tft.drawCentreString("Exit", tftWidth / 6, tftHeight + 4, 1);
-    tft.drawCentreString("UP", tftWidth / 2, tftHeight + 4, 1);
-    tft.drawCentreString("DOWN", 5 * tftWidth / 6, tftHeight + 4, 1);
+    // tft.drawRoundRect(5, tftHeight + 2, tftWidth - 10, 43, 5, color);
+    // tft.setTextColor(color);
+    // tft.setTextSize(FM);
+    // tft.drawCentreString("Exit", tftWidth / 6, tftHeight + 4, 1);
+    // tft.drawCentreString("UP", tftWidth / 2, tftHeight + 4, 1);
+    // tft.drawCentreString("DOWN", 5 * tftWidth / 6, tftHeight + 4, 1);
 }
 
 /***************************************************************************************
@@ -691,7 +691,7 @@ Exit:
         fgcolor
     );
 #if defined(HAS_TOUCH)
-    TouchFooter();
+    // TouchFooter();
 #endif
     return coord;
 }
@@ -748,13 +748,14 @@ void drawSubmenu(int index, std::vector<Option> &options, const char *title) {
     tft.drawCentreString(thirdOption, tftWidth / 2, middle_down, SMOOTH_FONT);
 
     tft.fillRect(tftWidth - 5, 0, 5, tftHeight, bruceConfig.bgColor);
-    tft.fillRect(tftWidth - 5, index * tftHeight / menuSize, 5, tftHeight / menuSize, bruceConfig.priColor);
+    // tft.fillRect(tftWidth - 5, index * tftHeight / menuSize, 5, tftHeight / menuSize,
+    // bruceConfig.priColor);
 
 #if defined(HAS_TOUCH)
     tft.drawCentreString("\\/", tftWidth / 2, middle_down + (FM * LH + 6), 1);
     tft.setTextColor(getColorVariation(bruceConfig.priColor), bruceConfig.bgColor);
     tft.drawString("[ x ]", 7, 7, 1);
-    TouchFooter();
+    // TouchFooter();
 #endif
 }
 
@@ -793,8 +794,8 @@ void drawStatusBar() {
     } // Draw Wg bedide BLE, if the others exist, if not, beside battery
 
     if (bruceConfig.theme.border) {
-        tft.drawRoundRect(5, 5, tftWidth - 10, tftHeight - 10, 5, bruceConfig.priColor);
-        tft.drawLine(5, 25, tftWidth - 6, 25, bruceConfig.priColor);
+        // tft.drawRoundRect(5, 5, tftWidth - 10, tftHeight - 10, 5, bruceConfig.priColor);
+        // tft.drawLine(5, 25, tftWidth - 6, 25, bruceConfig.priColor);
     }
 
     if (clock_set) {
@@ -809,7 +810,7 @@ void drawStatusBar() {
 #endif
     } else {
         setTftDisplay(12, 12, bruceConfig.priColor, 1, bruceConfig.bgColor);
-        tft.print("BRUCE " + String(BRUCE_VERSION));
+        // tft.print("" + String(BRUCE_VERSION));
     }
 }
 
@@ -826,7 +827,7 @@ void drawMainBorder(bool clear) {
     drawStatusBar();
 
 #if defined(HAS_TOUCH)
-    TouchFooter();
+    // TouchFooter();
 #endif
 }
 

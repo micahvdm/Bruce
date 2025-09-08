@@ -28,6 +28,7 @@ MainMenu::MainMenu() {
 #if !defined(LITE_VERSION)
         &scriptsMenu,
 #endif
+        &badUSBMenu,
         &othersMenu,
         &clockMenu,
         &connectMenu,
