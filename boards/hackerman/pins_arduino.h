@@ -47,28 +47,28 @@ static const uint8_t MISO = 13;
 #define SPI_TOUCH_FREQUENCY 2500000
 
 // ---------------- ILI9341 TFT ---------------
-#define ILI9341_DRIVER 1
-#define TFT_RGB_ORDER 0
-#define TFT_WIDTH 240
-#define TFT_HEIGHT 320
-#define TFT_BACKLIGHT_ON 1
-#define TFT_BL 4
-#define TFT_RST 18
-#define TFT_DC 21
-#define TFT_MISO MISO
-#define TFT_MOSI MOSI
-#define TFT_SCLK SCK
-#define TFT_CS 10
-#define SMOOTH_FONT 1
-#define ROTATION 1
-#define MINBRIGHT (uint8_t)1
+// #define ILI9341_DRIVER 1
+// #define TFT_RGB_ORDER 0
+// #define TFT_WIDTH 240
+// #define TFT_HEIGHT 320
+// #define TFT_BACKLIGHT_ON 1
+// #define TFT_BL 4
+// #define TFT_RST 18
+// #define TFT_DC 21
+// #define TFT_MISO MISO
+// #define TFT_MOSI MOSI
+// #define TFT_SCLK SCK
+// #define TFT_CS 10
+#define SMOOTH_FONT -1
+#define ROTATION -1
+// #define MINBRIGHT (uint8_t)1
 
 // ---------------- XPT2046 Touch  ---------------
-#define TOUCH_XPT2046_SPI
+// #define TOUCH_XPT2046_SPI
 // #define USE_TFT_eSPI_TOUCH
 // #define TOUCH_CONFIG_INT_GPIO_NUM 7
-#define TOUCH_CS 9
-#define TOUCH_IRQ 7
+// #define TOUCH_CS 9
+// #define TOUCH_IRQ 7
 #define XPT2046_TOUCH_CONFIG_INT_GPIO_NUM 7
 #define XPT2046_SPI_BUS_MISO_IO_NUM MISO
 #define XPT2046_SPI_BUS_MOSI_IO_NUM MOSI

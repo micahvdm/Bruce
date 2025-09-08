@@ -1,13 +1,13 @@
 #include "core/powerSave.h"
 #include "core/utils.h"
 #include <Arduino.h>
-#include <CYD28_TouchscreenR.h>
+// #include <CYD28_TouchscreenR.h>
 #include <driver/adc.h>
 #include <esp_adc_cal.h>
 #include <interface.h>
 #include <soc/adc_channel.h>
 #include <soc/soc_caps.h>
-CYD28_TouchR touch(320, 240);
+// CYD28_TouchR touch(320, 240);
 
 /***************************************************************************************
 ** Function name: _setup_gpio()
@@ -21,9 +21,9 @@ void _setup_gpio() {
     pinMode(NRF24_SS_PIN, OUTPUT);
     digitalWrite(CC1101_SS_PIN, HIGH);
     digitalWrite(NRF24_SS_PIN, HIGH);
-    pinMode(TFT_BL, OUTPUT);
-    bruceConfig.rotation = 1; // portrait mode for Phantom
-    tft.setRotation(bruceConfig.rotation);
+    // pinMode(TFT_BL, OUTPUT);
+    // bruceConfig.rotation = 1; // portrait mode for Phantom
+    // tft.setRotation(bruceConfig.rotation);
     // uint16_t calData[5] = {275, 3500, 280, 3590, 3}; // 0011 = 3
     // tft.setTouch(calData);
 
@@ -40,10 +40,10 @@ void _setup_gpio() {
 ** Description:   second stage gpio setup to make a few functions work
 ***************************************************************************************/
 void _post_setup_gpio() {
-    if (!touch.begin(&tft.getSPIinstance())) {
-        Serial.println("Touch IC not Started");
-        log_i("Touch IC not Started");
-    } else Serial.println("Touch IC Started");
+    // if (!touch.begin(&tft.getSPIinstance())) {
+    //     Serial.println("Touch IC not Started");
+    //     log_i("Touch IC not Started");
+    // } else Serial.println("Touch IC Started");
 }
 
 /***************************************************************************************
@@ -59,12 +59,12 @@ int getBattery() { return 0; }
 ** set brightness value
 **********************************************************************/
 void _setBrightness(uint8_t brightval) {
-    if (brightval == 0) {
-        analogWrite(TFT_BL, brightval);
-    } else {
-        int bl = MINBRIGHT + round(((255 - MINBRIGHT) * brightval / 100));
-        analogWrite(TFT_BL, bl);
-    }
+    // if (brightval == 0) {
+    //     analogWrite(TFT_BL, brightval);
+    // } else {
+    //     int bl = MINBRIGHT + round(((255 - MINBRIGHT) * brightval / 100));
+    //     analogWrite(TFT_BL, bl);
+    // }
 }
 
 /*********************************************************************
@@ -76,59 +76,59 @@ void InputHandler(void) {
     static long tm = millis();
 
     // debounce touch events
-    if (millis() - tm > 300 || LongPress) {
-        if (touch.touched()) {
-            auto raw = touch.getPointScaled();
-            tm = millis();
+    // if (millis() - tm > 300 || LongPress) {
+    //     if (touch.touched()) {
+    //         auto raw = touch.getPointScaled();
+    //         tm = millis();
 
-            // --- Rotation compensation ---
-            int16_t tx = raw.x;
-            int16_t ty = raw.y;
+    //         // --- Rotation compensation ---
+    //         int16_t tx = raw.x;
+    //         int16_t ty = raw.y;
 
-            switch (bruceConfig.rotation) {
-                case 2: // portrait
-                {
-                    int tmp = tx;
-                    tx = tftWidth - ty;
-                    ty = tmp;
-                } break;
-                case 3: // landscape
-                    // no swap needed
-                    break;
-                case 0: // portrait inverted
-                {
-                    int tmp = tx;
-                    tx = ty;
-                    ty = (tftHeight + 0) - tmp; // calibrate in real time
-                } break;
-                case 1:                        // landscape inverted
-                    ty = (tftHeight + 0) - ty; // calibrate in real time
-                    tx = tftWidth - tx;
-                    break;
-            }
+    //         switch (bruceConfig.rotation) {
+    //             case 2: // portrait
+    //             {
+    //                 int tmp = tx;
+    //                 tx = tftWidth - ty;
+    //                 ty = tmp;
+    //             } break;
+    //             case 3: // landscape
+    //                 // no swap needed
+    //                 break;
+    //             case 0: // portrait inverted
+    //             {
+    //                 int tmp = tx;
+    //                 tx = ty;
+    //                 ty = (tftHeight + 0) - tmp; // calibrate in real time
+    //             } break;
+    //             case 1:                        // landscape inverted
+    //                 ty = (tftHeight + 0) - ty; // calibrate in real time
+    //                 tx = tftWidth - tx;
+    //                 break;
+    //         }
 
-            // Serial.printf( "Touch: raw=(%d,%d) mapped=(%d,%d) rot=%d\n", raw.x, raw.y, tx, ty,
-            // bruceConfig.rotation" );
+    //         // Serial.printf( "Touch: raw=(%d,%d) mapped=(%d,%d) rot=%d\n", raw.x, raw.y, tx, ty,
+    //         // bruceConfig.rotation" );
 
-            // wake screen if off
-            if (!wakeUpScreen()) {
-                AnyKeyPress = true;
-            } else {
-                return;
-            }
+    //         // wake screen if off
+    //         if (!wakeUpScreen()) {
+    //             AnyKeyPress = true;
+    //         } else {
+    //             return;
+    //         }
 
-            // store in global touch point
-            touchPoint.x = tx;
-            touchPoint.y = ty;
-            touchPoint.pressed = true;
+    //         // store in global touch point
+    //         touchPoint.x = tx;
+    //         touchPoint.y = ty;
+    //         touchPoint.pressed = true;
 
-            // optional: heatmap logging
-            touchHeatMap(touchPoint);
+    //         // optional: heatmap logging
+    //         touchHeatMap(touchPoint);
 
-        } else {
-            touchPoint.pressed = false;
-        }
-    }
+    //     } else {
+    //         touchPoint.pressed = false;
+    //     }
+    // }
 }
 
 /*********************************************************************
