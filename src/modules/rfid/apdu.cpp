@@ -1,6 +1,6 @@
 #include "apdu.h"
-#include <vector>
 #include <string>
+#include <vector>
 
 const uint8_t ApduCommand::C_APDU_CLA = 0;
 const uint8_t ApduCommand::C_APDU_INS = 1;
@@ -26,7 +26,7 @@ const uint8_t ApduCommand::ISO7816_SELECT_FILE = 0xA4;
 const uint8_t ApduCommand::ISO7816_READ_BINARY = 0xB0;
 const uint8_t ApduCommand::ISO7816_UPDATE_BINARY = 0xD6;
 
-const std::vector<uint8_t> NdefCommand::APPLICATION_NAME_V2 = {0, 0x07, 0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01};
+const std::vector<uint8_t> NdefCommand::APPLICATION_NAME_V2 = {0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01};
 const uint8_t NdefCommand::NDEF_MAX_LENGTH = 0x64;
 
 const uint8_t Ndef::TNF_WELL_KNOWN = 0x01;

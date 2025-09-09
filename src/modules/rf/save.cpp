@@ -1,6 +1,6 @@
 #include "save.h"
 
-bool rf_raw_save(RawRecording recorded) {
+bool rf_raw_save(const RawRecording &recorded) {
     FS *fs = nullptr;
     if (!getFsStorage(fs) || fs == nullptr) {
         displayError("No space left on device", true);

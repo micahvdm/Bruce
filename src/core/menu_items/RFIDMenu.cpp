@@ -17,6 +17,7 @@ void RFIDMenu::optionsMenu() {
         {"Load file",   [=]() { TagOMatic(TagOMatic::LOAD_MODE); }      },
         {"Erase data",  [=]() { TagOMatic(TagOMatic::ERASE_MODE); }     },
         {"Write NDEF",  [=]() { TagOMatic(TagOMatic::WRITE_NDEF_MODE); }},
+        {"Emulate NDEF",  [=]() { TagOMatic(TagOMatic::EMULATE_MODE); }},
         {"Amiibolink",  [=]() { Amiibo(); }                             },
         {"Chameleon",   [=]() { Chameleon(); }                          },
         {"PN532 BLE",   [=]() { Pn532ble(); }                           },

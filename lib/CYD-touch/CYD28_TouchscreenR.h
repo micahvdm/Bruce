@@ -1,4 +1,5 @@
 /* Touchscreen library for XPT2046 Touch Controller Chip
+ * TFT_eSPI is needed for the calibration routine to draw the targets.
  * Copyright (c) 2015, Paul Stoffregen, paul@pjrc.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,8 +31,9 @@
 
 #include <Arduino.h>
 #include <SPI.h>
+#include <TFT_eSPI.h>
 
-#define CYD28_TouchR_Z_THRESH 300
+#define CYD28_TouchR_Z_THRESH 350
 #define CYD28_TouchR_Z_THRES_INT 75
 
 // These definitions come from https://github.com/rzeldent/platformio-espressif32-sunton board definitions
@@ -49,13 +51,9 @@
 #define CYD28_TouchR_CS 9
 
 #endif
-// CALIBRAION VALUES
-#define CYD28_TouchR_CAL_XMIN 185
-#define CYD28_TouchR_CAL_XMAX 3700
-#define CYD28_TouchR_CAL_YMIN 280
-#define CYD28_TouchR_CAL_YMAX 3850
 
-class CYD28_TS_Point {
+class CYD28_TS_Point
+{
 public:
     CYD28_TS_Point(void) : x(0), y(0), z(0) {}
     CYD28_TS_Point(int16_t x, int16_t y, int16_t z) : x(x), y(y), z(z) {}
@@ -64,7 +62,8 @@ public:
     int16_t x, y, z;
 };
 
-class CYD28_TouchR {
+class CYD28_TouchR
+{
 public:
     constexpr CYD28_TouchR(int32_t w, int32_t h) : _delay(2), sizeX_px(w), sizeY_px(h) {}
     bool begin();
@@ -74,7 +73,9 @@ public:
     CYD28_TS_Point getPointRaw();
     bool touched();
     void readData(uint16_t *x, uint16_t *y, uint8_t *z);
-    void setRotation(uint8_t n) { rotation = n % 4; }
+    void setRotation(uint8_t n) { rotation = n % 4; } // This rotation is for touch logic, not display
+    void calibrate(uint16_t *parameters, TFT_eSPI *tft, uint8_t size, uint32_t color_fg, uint32_t color_bg);
+    void setCalibration(uint16_t *parameters);
     void setThreshold(uint16_t th) { threshold = th; }
 
     volatile bool isrWake = true;
@@ -93,6 +94,11 @@ private:
     const int32_t sizeX_px;
     const int32_t sizeY_px;
     SPIClass *_pspi = nullptr;
+    uint16_t cal_xmin = 180;
+    uint16_t cal_xmax = 3700;
+    uint16_t cal_ymin = 280;
+    uint16_t cal_ymax = 3900;
+    bool cal_rot = false;
 };
 
 #endif

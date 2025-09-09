@@ -94,6 +94,8 @@ public:
     virtual int write_ndef() = 0;
     virtual int load() = 0;
     virtual int save(String filename) = 0;
+    virtual int emulate_tag(String ndef_data) { return NOT_IMPLEMENTED; }
+    virtual int set_idle() { return NOT_IMPLEMENTED; }
 
     String statusMessage(int status) const {
         switch (status) {

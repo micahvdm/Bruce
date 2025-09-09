@@ -237,7 +237,10 @@ void rf_raw_record_create(RawRecording &recorded, bool &returnToMenu) {
 
                 if (status.lastSignalTime != 0) {
                     unsigned long signalDurationMs = signalDuration / RMT_1MS_TICKS;
-                    uint16_t gap = (uint16_t)(receivedTime - status.lastSignalTime - signalDurationMs - 5);
+                    long gap_calc =
+                        (long)receivedTime - (long)status.lastSignalTime - (long)signalDurationMs - 5;
+                    if (gap_calc < 0) gap_calc = 0;
+                    uint16_t gap = (uint16_t)gap_calc;
                     recorded.gaps.push_back(gap);
                 } else {
                     status.firstSignalTime = receivedTime;

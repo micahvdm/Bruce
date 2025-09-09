@@ -91,8 +91,8 @@ void rf_raw_emit(RawRecording &recorded, bool &returnToMenu) {
         outputState = false;
         if (i < recorded.codes.size() - 1) {
             unsigned long startTime = millis();
-            while (millis() - startTime < recorded.gaps[i]) {
-                delay(10); // Small delay to avoid busy-waiting
+            while (millis() - startTime < recorded.gaps[i] && recorded.gaps[i] > 0) {
+                vTaskDelay(1); // Yield to other tasks for better precision
                 if (selPressed || escPressed) break;
             }
         }

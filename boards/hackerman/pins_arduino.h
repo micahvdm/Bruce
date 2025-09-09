@@ -7,7 +7,7 @@
 // ---------------- CONFIG --------------------
 #define USB_VID 0x303a
 #define USB_PID 0x1001
-#define USER_SETUP_LOADED 1
+#define USER_SETUP_LOADED 70
 #define USE_HSPI_PORT 1
 #define HAS_SCREEN 1
 #define HAS_TOUCH 1
@@ -42,9 +42,10 @@ static const uint8_t SS = 5;
 static const uint8_t SCK = 12;
 static const uint8_t MOSI = 11;
 static const uint8_t MISO = 13;
-#define SPI_FREQUENCY 20000000
+#define TFT_VSPI_PORT 1
+#define SPI_FREQUENCY 40000000
 #define SPI_READ_FREQUENCY 20000000
-#define SPI_TOUCH_FREQUENCY 2500000
+// #define SPI_TOUCH_FREQUENCY 2500000
 
 // ---------------- ILI9341 TFT ---------------
 #define ILI9341_DRIVER 1
@@ -65,8 +66,6 @@ static const uint8_t MISO = 13;
 
 // ---------------- XPT2046 Touch  ---------------
 #define TOUCH_XPT2046_SPI
-// #define USE_TFT_eSPI_TOUCH
-// #define TOUCH_CONFIG_INT_GPIO_NUM 7
 #define TOUCH_CS 9
 #define TOUCH_IRQ 7
 #define XPT2046_TOUCH_CONFIG_INT_GPIO_NUM 7
@@ -101,6 +100,12 @@ static const uint8_t MISO = 13;
 static const uint8_t SPI_SCK_PIN = 39;
 static const uint8_t SPI_MOSI_PIN = 40;
 static const uint8_t SPI_MISO_PIN = 41;
+// #define RF_SPI_HOST = VSPI
+// #define RF_SPI_FREQ_HZ = 4000000
+// #define RF_SPI_MODE = SPI_MODE0
+// #define RF_SCK = SPI_SCK_PIN
+// #define RF_MOSI = SPI_MOSI_PIN
+// #define RF_MISO = SPI_MISO_PIN
 
 // ---------------- CC1101 Radio ----------------
 #define USE_CC1101_VIA_SPI
@@ -131,5 +136,8 @@ static const uint8_t SPI_MISO_PIN = 41;
 
 // ---------------- ALIAS -----
 #define SPI_SS_PIN 1
+
+#define DEEPSLEEP_WAKEUP_PIN 7 // Touch interrupt
+#define DEEPSLEEP_PIN_ACT LOW
 
 #endif /* Pins_Arduino_h */

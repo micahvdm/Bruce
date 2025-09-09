@@ -85,6 +85,7 @@ void TagOMatic::loop() {
             case WRITE_NDEF_MODE: write_ndef_data(); break;
             case ERASE_MODE: erase_card(); break;
             case SAVE_MODE: save_file(); break;
+            case EMULATE_MODE: emulate_tag(); break;
         }
     }
 }
@@ -103,6 +104,7 @@ void TagOMatic::select_state() {
     options.emplace_back("Load file", [=]() { set_state(LOAD_MODE); });
     options.emplace_back("Write NDEF", [=]() { set_state(WRITE_NDEF_MODE); });
     options.emplace_back("Erase tag", [=]() { set_state(ERASE_MODE); });
+    options.emplace_back("Emulate NDEF", [=]() { emulate_tag(); });
 
     loopOptions(options);
 }
@@ -144,6 +146,7 @@ void TagOMatic::set_state(RFID_State state) {
         case WRITE_NDEF_MODE: _ndef_created = false; break;
         case SAVE_MODE:
         case ERASE_MODE:
+        case EMULATE_MODE:
         case CUSTOM_UID_MODE: break;
     }
     delay(300);
@@ -163,6 +166,7 @@ void TagOMatic::display_banner() {
         case WRITE_MODE: printSubtitle("WRITE DATA MODE"); break;
         case WRITE_NDEF_MODE: printSubtitle("WRITE NDEF MODE"); break;
         case SAVE_MODE: printSubtitle("SAVE MODE"); break;
+        case EMULATE_MODE: printSubtitle("EMULATE NDEF MODE"); break;
     }
 
     tft.setTextSize(FP);
@@ -486,6 +490,54 @@ void TagOMatic::save_file() {
         displayError("Error writing file.");
     }
     delay(1000);
+    set_state(READ_MODE);
+}
+
+void TagOMatic::emulate_tag() {
+    current_state = EMULATE_MODE;
+    display_banner();
+
+    // Put the RFID chip in a neutral state before showing the UI.
+    // This prevents errors if the chip was left in a bad state by a previous operation.
+    if (_rfid->set_idle() != RFIDInterface::SUCCESS) {
+        displayError("Failed to set module to idle.");
+        delay(1000);
+        set_state(READ_MODE);
+        return;
+    }
+
+    String prefix = "";
+    bool back = false;
+
+    options = {
+        {"Visit Bruce", [&]() { prefix = "https://bruce.computer"; }},
+        {"Open Url",    [&]() { prefix = "https://"; }              },
+        {"Phone Call",  [&]() { prefix = "tel:"; }                  },
+        {"Send Email",  [&]() { prefix = "mailto:"; }               },
+        {"Custom",      [&]() { prefix = ""; }                      },
+        {"Back",        [&]() { back = true; }                      },
+    };
+    delay(200);
+    loopOptions(options);
+
+    if (back) {
+        set_state(READ_MODE);
+        return;
+    }
+
+    String ndef_data = keyboard(prefix, 255, "NDEF data:");
+    ndef_data.trim();
+
+    display_banner();
+    displayInfo("Emulating tag...\nPress any key to stop.");
+
+    int result = _rfid->emulate_tag(ndef_data);
+
+    if (result != RFIDInterface::SUCCESS) {
+        displayError(_rfid->statusMessage(result));
+        delay(1000);
+    }
+
     set_state(READ_MODE);
 }
 

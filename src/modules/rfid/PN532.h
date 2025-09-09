@@ -48,6 +48,8 @@ public:
     int write_ndef();
     int load();
     int save(String filename);
+    int emulate_tag(String ndef_data);
+    int set_idle();
 
 private:
     bool _use_i2c;
